@@ -1265,8 +1265,7 @@ tbody tr:last-child td {
 
 <div class="toast" id="toast" role="status" aria-live="polite">Mode Demo Pasien Bartocar telah dimuat.</div>
 
-   // Start with default rich Demo
-   // enterDemoMode();
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
@@ -1274,17 +1273,20 @@ tbody tr:last-child td {
   const SUPABASE_URL = 'https://phawrebeavbhdsjfkfjf.supabase.co';
   const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QsksZFhRXcc@EdifrGBCQ_jpHXmg_u';
   let authSubscription = null;
-  let demoMode = true;
-
-  // INIT SUPABASE CLIENT
+  let demoMode = false;
+  
+  // INIT SUPABASE
   try {
     if(window.supabase){
       sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-      console.log('Supabase connected:', SUPABASE_URL);
+      console.log('Supabase OK', SUPABASE_URL);
     }
-  } catch(e){ console.log('Supabase init error', e) }
-  let demoMode = true; // default ke demo yang kaya agar tampilan langsung siap dievaluasi
-
+  } catch(e){ console.error('Supabase init gagal', e) }
+   } catch(e){ console.error('Supabase init gagal', e) }
+  const today = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  };
   const today = () => {
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
