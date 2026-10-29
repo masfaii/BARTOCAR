@@ -2113,7 +2113,40 @@ tbody tr:last-child td {
   enterDemoMode();
 })();
 </script>
+<script type="module">
+import { supabase } from './supabase.js'
 
+// ID pasien TEST-001 yang tadi kita bikin di Supabase
+const PATIENT_ID = '0a067ef2-b905-46d6-a384-03eb3a20bd8b'
+
+// Buat fungsi simpan beneran ke Supabase
+window.simpanMinumDB = async function(jumlah) {
+  console.log('Menyimpan', jumlah)
+  const { data, error } = await supabase.from('fluid_logs').insert({
+    patient_id: PATIENT_ID,
+    amount_ml: jumlah,
+    type: 'minum'
+  }).select()
+  
+  if(error) {
+    alert('Gagal simpan: ' + error.message)
+    console.error(error)
+  } else {
+    alert('✅ Berhasil! ' + jumlah + 'ml kesimpen di database TEST-001')
+    // refresh biar keliatan di ringkasan
+    location.reload()
+  }
+}
+
+// Ganti fungsi lama biar kepanggil yang baru
+// Cari fungsi logFluid lama dan timpa
+setTimeout(() => {
+  const oldLogFluid = window.logFluid
+  window.logFluid = function(amount) {
+    simpanMinumDB(amount)
+  }
+}, 1000)
+</script>
 
 
 
