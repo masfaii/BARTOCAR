@@ -526,11 +526,34 @@
     });
   }
 </script></main>
-
+            
+</div>
+<script>
+function showView(name){
+  document.getElementById('view-login').style.display = name==='app'?'none':'block';
+  document.getElementById('view-app').style.display = name==='app'?'block':'none';
+  window.scrollTo(0,0);
+}
+function checkView(){
+  if(sessionStorage.getItem('bartocar_patient_active') || sessionStorage.getItem('bartocar_role') || location.hash.includes('dashboard') || location.hash.includes('cairan')){
+    showView('app');
+  } else {
+    showView('login');
+  }
+}
+document.addEventListener('DOMContentLoaded', checkView);
+// override login biar pindah view, bukan cuma hash
+window.handleClinicalLogin = function(){
+  sessionStorage.setItem('bartocar_role','clinical');
+  showView('app');
+  location.hash='#dashboard-monitoring';
+}
+</script>
 
 </body></html>
 
-<!-- BARTOCAR - Manajemen Cairan Mandiri (Integrasi HTML & Desain Klinis) -->
+<div id="view-app" style="display:none">
+  <!-- BARTOCAR - Manajemen Cairan Mandiri ... isi dashboard lu ...
 <!DOCTYPE html><html lang="id"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1325,6 +1348,8 @@ tbody tr:last-child td {
 </style>
 </head>
 <body>
+            
+<div id="view-login">
 
 <div class="app-wrapper">
   <!-- Top Navigation & Role Bar -->
