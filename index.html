@@ -1265,14 +1265,23 @@ tbody tr:last-child td {
 
 <div class="toast" id="toast" role="status" aria-live="polite">Mode Demo Pasien Bartocar telah dimuat.</div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (() => {
   const $ = id => document.getElementById(id);
   let sb = null, user = null, profile = null, patients = [], selectedPatient = null, records = [], adminRecords = [];
-  const SUPABASE_URL = 'https://phawrebeavbhdjsjfkjf.supabase.co';
-  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QsksZFHBrXcc0EDifrG8CQ_JpHXmg_u';
+  const SUPABASE_URL = 'https://phawrebeavbhdsjfkfjf.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_QsksZFhRXcc@EdifrGBCQ_jpHXmg_u';
   let authSubscription = null;
+  let demoMode = true;
+
+  // INIT SUPABASE CLIENT
+  try {
+    if(window.supabase){
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+      console.log('Supabase connected:', SUPABASE_URL);
+    }
+  } catch(e){ console.log('Supabase init error', e) }
   let demoMode = true; // default ke demo yang kaya agar tampilan langsung siap dievaluasi
 
   const today = () => {
